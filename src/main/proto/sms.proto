@@ -1,0 +1,35 @@
+//使用proto3语法
+syntax = "proto3";
+// 是否生成多个类
+option java_multiple_files = false;
+//生成Java类所在包
+option java_package = "grpc_demo.sms.proto";
+//生成外层类名
+option java_outer_classname = "SmsProto";
+// .proto包名
+package news;
+
+service SmsService {
+  //stream 表示流式响应
+  rpc sendSms(SmsRequest) returns (stream SmsResponse) {}
+  rpc createPhone(stream PhoneNumberRequest) returns (PhoneNumberResponse) {}
+  rpc createAndSendSms(stream PhoneNumberRequest) returns (stream PhoneNumberResponse) {}
+}
+
+message SmsRequest {
+  //repeated说明是一个对象集合  不同语言生成的集合类型不同 例如Java生成List，javascript生成数组。。。等等
+  repeated string phoneNumber = 1;
+  string content = 2;
+}
+
+message SmsResponse {
+  string result = 1;
+}
+
+message PhoneNumberRequest {
+  string phoneNumber = 1;
+}
+
+message PhoneNumberResponse {
+  string result = 1;
+}

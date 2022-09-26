@@ -1,0 +1,31 @@
+//使用proto3语法
+syntax = "proto3";
+// 是否生成多个类
+option java_multiple_files = false;
+//生成Java类所在包
+option java_package = "grpc_demo.news.proto";
+//生成外层类名
+option java_outer_classname = "NewsProto";
+// .proto包名
+package news;
+
+service NewsService {
+  //list是方法名 NewsRequest代表传入参数 NewsResponse代表返回响应
+  rpc list(NewsRequest) returns (NewsResponse) {}
+}
+
+message NewsRequest {
+  int64 date = 1;
+}
+
+message NewsResponse {
+  //repeated说明是一个对象集合  不同语言生成的集合类型不同 例如Java生成List，javascript生成数组。。。等等
+  repeated News news = 1;
+}
+
+message News {
+  int32 id = 1;
+  string title = 2;
+  string content = 3;
+  int64 timestamp = 4;
+}
